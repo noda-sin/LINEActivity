@@ -1,6 +1,6 @@
 LINEActivity
 ============
-LINEActivity is an iOS 6 UIActivity subclass for uploading to Dropbox.
+LINEActivity is an iOS 6 UIActivity subclass for LINE.
 
 
 
