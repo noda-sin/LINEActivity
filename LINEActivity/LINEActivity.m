@@ -59,6 +59,7 @@
     
     NSString *LINEURLString = nil;
     if ([item isKindOfClass:[NSString class]]) {
+		item = [(NSString *)item stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", item];
     } else if ([item isKindOfClass:[UIImage class]]) {
         UIPasteboard *pasteboard = [UIPasteboard pasteboardWithUniqueName];
