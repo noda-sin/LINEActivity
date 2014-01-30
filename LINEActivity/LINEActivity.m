@@ -59,8 +59,8 @@
     
     NSString *LINEURLString = nil;
     if ([item isKindOfClass:[NSString class]]) {
-		item = [(NSString *)item stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", item];
+        NSString *urlEncodeString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( NULL, (CFStringRef)item, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 ));
+        LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", urlEncodeString];
     } else if ([item isKindOfClass:[UIImage class]]) {
         UIPasteboard *pasteboard = [UIPasteboard pasteboardWithUniqueName];
         [pasteboard setData:UIImagePNGRepresentation(item) forPasteboardType:@"public.png"];
