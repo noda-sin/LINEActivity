@@ -2,9 +2,13 @@ LINEActivity
 ============
 LINEActivity is an iOS 6 UIActivity subclass for LINE.
 
+How To use
+==========
 
+**podfile**
 
-
+      platform :ios, '7.0'
+      pod "LINEActivity", "~> 0.2.0"
 
 License
 ============
