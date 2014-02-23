@@ -7,7 +7,7 @@ How To use
 
 **podfile**
 
-      platform :ios, '7.0'
+      platform :ios, '6.0'
       pod "LINEActivity", "~> 0.2.0"
 
 License
