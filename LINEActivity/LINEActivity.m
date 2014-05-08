@@ -62,7 +62,12 @@
         NSString *urlEncodeString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( NULL, (CFStringRef)item, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 ));
         LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", urlEncodeString];
     } else if ([item isKindOfClass:[UIImage class]]) {
-        UIPasteboard *pasteboard = [UIPasteboard pasteboardWithUniqueName];
+        UIPasteboard *pasteboard;
+        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+            pasteboard = [UIPasteboard generalPasteboard];
+        } else {
+            pasteboard = [UIPasteboard pasteboardWithUniqueName];
+        }
         [pasteboard setData:UIImagePNGRepresentation(item) forPasteboardType:@"public.png"];
         LINEURLString = [NSString stringWithFormat:@"line://msg/image/%@", pasteboard.name];
     } else {
