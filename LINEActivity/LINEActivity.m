@@ -8,6 +8,25 @@
 #import "LINEActivity.h"
 
 @implementation LINEActivity
+{
+    BOOL _performIfLineNotInstalled;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _performIfLineNotInstalled = YES;
+    }
+    return self;
+}
+
+- (id)initWithPerformIfLineNotInstalled:(BOOL)performIfLineNotInstalled
+{
+    if (self = [super init]) {
+        _performIfLineNotInstalled = performIfLineNotInstalled;
+    }
+    return self;
+}
 
 - (NSString *)activityType {
     return @"jp.naver.LINEActivity";
@@ -25,6 +44,10 @@
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 {
+    if (!_performIfLineNotInstalled && ![self isUsableLINE]) {
+        return NO;
+    }
+
     for (id activityItem in activityItems) {
         if ([activityItem isKindOfClass:[NSString class]] || [activityItem isKindOfClass:[UIImage class]]) {
             return YES;

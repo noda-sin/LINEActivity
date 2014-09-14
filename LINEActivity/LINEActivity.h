@@ -9,4 +9,8 @@
 
 @interface LINEActivity : UIActivity
 
+- (id)init;
+
+- (id)initWithPerformIfLineNotInstalled:(BOOL)performIfLineNotInstalled;
+
 @end
