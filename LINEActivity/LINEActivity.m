@@ -7,6 +7,12 @@
 
 #import "LINEActivity.h"
 
+@interface LINEActivity ()
+@property (copy) NSString *text;
+@property (strong) NSURL *url;
+@property (strong) UIImage *image;
+@end
+
 @implementation LINEActivity
 {
     BOOL _performIfLineNotInstalled;
@@ -49,17 +55,31 @@
     }
 
     for (id activityItem in activityItems) {
-        if ([activityItem isKindOfClass:[NSString class]] || [activityItem isKindOfClass:[UIImage class]]) {
+        if ([activityItem isKindOfClass:[NSString class]] || [activityItem isKindOfClass:[NSURL class]] || [activityItem isKindOfClass:[UIImage class]]) {
             return YES;
         }
     }
     return NO;
 }
 
-- (void)prepareWithActivityItems:(NSArray *)activityItems {
+- (void)prepareWithActivityItems:(NSArray *)activityItems
+{
     for (id activityItem in activityItems) {
-        if ([self openLINEWithItem:activityItem])
-            break;
+        [self addItem:activityItem];
+    }
+}
+
+- (void)performActivity
+{
+    if (!!self.image) {
+        [self openLINEWithItem:self.image];
+    } else if (!!self.text && !!self.url) {
+        NSString *textAndURL = [NSString stringWithFormat:@"%@ %@", self.text, self.url];
+        [self openLINEWithItem:textAndURL];
+    } else if (!!self.text) {
+        [self openLINEWithItem:self.text];
+    } else if (!!self.url) {
+        [self openLINEWithItem:self.url];
     }
 }
 
@@ -71,6 +91,17 @@
 - (void)openLINEOnITunes
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/line/id443904275?ls=1&mt=8"]];
+}
+
+- (void)addItem:(id)item
+{
+    if ([item isKindOfClass:[NSString class]]) {
+        self.text = item;
+    } else if ([item isKindOfClass:[NSURL class]]) {
+        self.url = item;
+    } else if ([item isKindOfClass:[UIImage class]]) {
+        self.image = item;
+    }
 }
 
 - (BOOL)openLINEWithItem:(id)item
