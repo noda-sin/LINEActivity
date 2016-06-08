@@ -45,7 +45,7 @@
 
 - (NSString *)activityTitle
 {
-    return @"LINE";
+    return NSLocalizedString(@"Send by LINE", nil);
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
